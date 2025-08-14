@@ -1,0 +1,1942 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/v1/user": {
+      "post": {
+        "operationId": "UserController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "get": {
+        "operationId": "UserController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/user/{id}": {
+      "get": {
+        "operationId": "UserController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "put": {
+        "operationId": "UserController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      },
+      "delete": {
+        "operationId": "UserController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        },
+        "summary": "Login user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/signout": {
+      "post": {
+        "operationId": "AuthController_signOut",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User successfully signed out"
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ],
+        "summary": "Sign out user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "operationId": "AuthController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "redirectUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "required": [
+                  "email",
+                  "redirectUrl"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent"
+          },
+          "400": {
+            "description": "Invalid email or redirect URL"
+          }
+        },
+        "summary": "Request password reset",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/confirm-reset-password": {
+      "post": {
+        "operationId": "AuthController_confirmResetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordConfirmDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password successfully reset"
+          },
+          "400": {
+            "description": "Invalid code or password format"
+          },
+          "401": {
+            "description": "Invalid or expired reset code"
+          }
+        },
+        "summary": "Confirm password reset with code",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/update-password": {
+      "post": {
+        "operationId": "AuthController_updatePassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password successfully updated"
+          },
+          "400": {
+            "description": "Invalid password format"
+          },
+          "401": {
+            "description": "Invalid current password or expired token"
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ],
+        "summary": "Update user password",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/user": {
+      "get": {
+        "operationId": "AuthController_getUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Current user data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "access_token": []
+          }
+        ],
+        "summary": "Get current user",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/sso": {
+      "post": {
+        "operationId": "AuthController_signInWithSSO",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SSORequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SSO authentication URL generated"
+          },
+          "400": {
+            "description": "Invalid provider or parameters"
+          }
+        },
+        "summary": "Initiate SSO authentication",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/sso/callback": {
+      "get": {
+        "operationId": "AuthController_handleSSOCallback",
+        "parameters": [
+          {
+            "name": "code",
+            "required": false,
+            "in": "query",
+            "description": "Authorization code from OAuth provider",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "access_token",
+            "required": false,
+            "in": "query",
+            "description": "Access token from implicit flow",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "refresh_token",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "description": "State parameter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "redirect_to",
+            "required": false,
+            "in": "query",
+            "description": "Final redirect URL",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to frontend with authentication"
+          }
+        },
+        "summary": "Handle SSO callback with authorization code or redirect for implicit flow",
+        "tags": [
+          "auth"
+        ]
+      },
+      "post": {
+        "operationId": "AuthController_handleSSOCallbackPost",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "access_token": {
+                    "type": "string"
+                  },
+                  "refresh_token": {
+                    "type": "string"
+                  },
+                  "redirect_to": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Handle SSO callback with tokens from frontend (fallback for implicit flow)",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/error": {
+      "get": {
+        "operationId": "AuthController_handleAuthError",
+        "parameters": [
+          {
+            "name": "message",
+            "required": false,
+            "in": "query",
+            "description": "Error message",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Handle authentication errors",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/projects": {
+      "post": {
+        "operationId": "ProjectController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      },
+      "get": {
+        "operationId": "ProjectController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "example": "1",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "example": "10",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      }
+    },
+    "/api/v1/projects/{id}": {
+      "get": {
+        "operationId": "ProjectController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      },
+      "put": {
+        "operationId": "ProjectController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      },
+      "delete": {
+        "operationId": "ProjectController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      }
+    },
+    "/api/v1/projects/{id}/plan": {
+      "post": {
+        "operationId": "ProjectController_uploadPlan",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      }
+    },
+    "/api/v1/projects/{id}/plan/url": {
+      "get": {
+        "operationId": "ProjectController_getPlanUrl",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Project"
+        ]
+      }
+    },
+    "/api/v1/abplan/plans/upload": {
+      "post": {
+        "operationId": "PlanUploadController_uploadPlan",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "PlanUpload"
+        ]
+      }
+    },
+    "/api/v1/abplan/plans/{path}": {
+      "delete": {
+        "operationId": "PlanUploadController_deletePlan",
+        "parameters": [
+          {
+            "name": "path",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "PlanUpload"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/plans/upload": {
+      "post": {
+        "operationId": "ProjectPlansController_uploadPlan",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/plans": {
+      "get": {
+        "operationId": "ProjectPlansController_getPlans",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/plans/{planId}": {
+      "get": {
+        "operationId": "ProjectPlansController_getPlan",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      },
+      "delete": {
+        "operationId": "ProjectPlansController_deletePlan",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "planId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/plans/analyze-all": {
+      "post": {
+        "operationId": "ProjectPlansController_analyzeAllPlans",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/plans/purge": {
+      "post": {
+        "operationId": "ProjectPlansController_purgeProjectData",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectPlans"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/analysis-results/latest": {
+      "get": {
+        "operationId": "AnalysisResultController_getLatestAnalysisResult",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AnalysisResult"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/analysis-results/history": {
+      "get": {
+        "operationId": "AnalysisResultController_getAnalysisHistory",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AnalysisResult"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/analysis-results/{id}": {
+      "delete": {
+        "operationId": "AnalysisResultController_deleteAnalysisResult",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "AnalysisResult"
+        ]
+      }
+    },
+    "/api/v1/projects/{projectId}/rooms": {
+      "get": {
+        "operationId": "ProjectRoomsController_getProjectRooms",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectRooms"
+        ]
+      },
+      "put": {
+        "operationId": "ProjectRoomsController_updateProjectRooms",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectRoomsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectRooms"
+        ]
+      }
+    },
+    "/api/v1/project-equipments/{projectId}": {
+      "get": {
+        "operationId": "ProjectEquipmentController_getProjectEquipments",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectEquipment"
+        ]
+      }
+    },
+    "/api/v1/project-equipments": {
+      "put": {
+        "operationId": "ProjectEquipmentController_updateProjectEquipments",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectEquipmentsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "ProjectEquipment"
+        ]
+      }
+    },
+    "/api/v1/subscription": {
+      "post": {
+        "operationId": "SubscriptionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      },
+      "get": {
+        "operationId": "SubscriptionController_findByUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/api/v1/subscription/{id}": {
+      "get": {
+        "operationId": "SubscriptionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      },
+      "put": {
+        "operationId": "SubscriptionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      },
+      "delete": {
+        "operationId": "SubscriptionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/api/v1/subscription/cancel": {
+      "post": {
+        "operationId": "SubscriptionController_cancel",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/api/v1/subscription/reactivate": {
+      "post": {
+        "operationId": "SubscriptionController_reactivate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Subscription"
+        ]
+      }
+    },
+    "/api/v1/quotes": {
+      "post": {
+        "operationId": "QuoteController_createQuote",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQuoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Quote"
+        ]
+      }
+    },
+    "/api/v1/quotes/{id}": {
+      "get": {
+        "operationId": "QuoteController_getQuoteById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Quote"
+        ]
+      },
+      "put": {
+        "operationId": "QuoteController_updateQuote",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuoteDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Quote"
+        ]
+      },
+      "delete": {
+        "operationId": "QuoteController_deleteQuote",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Quote"
+        ]
+      }
+    },
+    "/api/v1/quotes/project/{projectId}": {
+      "get": {
+        "operationId": "QuoteController_getQuotesByProjectId",
+        "parameters": [
+          {
+            "name": "projectId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Quote"
+        ]
+      }
+    },
+    "/api/v1/api/v1/compliance/validate/room-equipment": {
+      "post": {
+        "description": "Validates electrical installation room equipment against NF C 15-100 standards",
+        "operationId": "ComplianceController_validateRoomEquipment",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomEquipmentValidationRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Room equipment validation completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoomEquipmentValidationResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid input data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "503": {
+            "description": "Service unavailable - Compliance engine not available"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Validate room equipment compliance",
+        "tags": [
+          "compliance"
+        ]
+      }
+    },
+    "/api/v1/api/v1/compliance/validate/global-with-dimensioning": {
+      "post": {
+        "description": "Validates complete electrical installation against NF C 15-100 standards and provides electrical dimensioning calculations",
+        "operationId": "ComplianceController_validateGlobalWithDimensioning",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoomEquipmentValidationRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Global validation with dimensioning completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GlobalValidationWithDimensioningResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - Invalid input data"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "503": {
+            "description": "Service unavailable - Compliance engine not available"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Validate global installation with electrical dimensioning",
+        "tags": [
+          "compliance"
+        ]
+      }
+    },
+    "/api/v1/api/v1/compliance/health": {
+      "get": {
+        "description": "Returns the health status of the compliance service and underlying compliance engine",
+        "operationId": "ComplianceController_healthCheck",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Health check completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "healthy"
+                    },
+                    "complianceEngine": {
+                      "type": "string",
+                      "example": "healthy"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Check compliance service health",
+        "tags": [
+          "compliance"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "API Documentation",
+    "description": "The API description for your NestJS application",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "users",
+      "description": "User management endpoints"
+    },
+    {
+      "name": "projects",
+      "description": "Project management endpoints"
+    },
+    {
+      "name": "subscriptions",
+      "description": "Subscription management endpoints"
+    },
+    {
+      "name": "storage",
+      "description": "File storage endpoints"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "cookie": {
+        "type": "http",
+        "in": "cookie",
+        "name": "access_token",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "ResetPasswordConfirmDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Reset code from email link",
+            "example": "bf3c5078-f6e1-4540-85f3-52cad13da4cd"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password (minimum 6 characters)",
+            "example": "newPassword123"
+          }
+        },
+        "required": [
+          "code",
+          "newPassword"
+        ]
+      },
+      "UpdatePasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "description": "Current password",
+            "example": "currentPassword123"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password (minimum 6 characters)",
+            "example": "newPassword123"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      },
+      "SSORequestDto": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "description": "OAuth provider",
+            "enum": [
+              "google",
+              "github",
+              "azure",
+              "facebook",
+              "twitter",
+              "apple"
+            ],
+            "example": "google"
+          },
+          "redirectTo": {
+            "type": "string",
+            "description": "URL to redirect to after successful authentication",
+            "example": "http://localhost:5173/dashboard"
+          }
+        },
+        "required": [
+          "provider"
+        ]
+      },
+      "CreateProjectDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateProjectDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateProjectRoomsDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateProjectEquipmentsDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateSubscriptionDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateSubscriptionDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateQuoteDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateQuoteDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "RoomEquipmentDto": {
+        "type": "object",
+        "properties": {
+          "equipment_type": {
+            "type": "string",
+            "description": "Equipment type"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity of equipment"
+          },
+          "specifications": {
+            "type": "object",
+            "description": "Equipment specifications"
+          }
+        },
+        "required": [
+          "equipment_type",
+          "quantity",
+          "specifications"
+        ]
+      },
+      "RoomDto": {
+        "type": "object",
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "description": "Room identifier"
+          },
+          "room_type": {
+            "type": "string",
+            "description": "Room type"
+          },
+          "room_area": {
+            "type": "number",
+            "description": "Room area in square meters"
+          },
+          "equipment": {
+            "description": "List of equipment in the room",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomEquipmentDto"
+            }
+          }
+        },
+        "required": [
+          "room_id",
+          "room_type",
+          "room_area",
+          "equipment"
+        ]
+      },
+      "RoomEquipmentValidationRequestDto": {
+        "type": "object",
+        "properties": {
+          "installation_id": {
+            "type": "string",
+            "description": "Installation identifier"
+          },
+          "@context": {
+            "type": "object",
+            "description": "JSON-LD context"
+          },
+          "rooms": {
+            "description": "List of rooms",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomDto"
+            }
+          }
+        },
+        "required": [
+          "installation_id",
+          "@context",
+          "rooms"
+        ]
+      },
+      "ComplianceViolationDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Violation message"
+          },
+          "suggested_fix": {
+            "type": "string",
+            "description": "Suggested fix"
+          },
+          "severity": {
+            "type": "string",
+            "description": "Severity level"
+          }
+        },
+        "required": [
+          "message",
+          "suggested_fix",
+          "severity"
+        ]
+      },
+      "GlobalComplianceDto": {
+        "type": "object",
+        "properties": {
+          "overall_status": {
+            "type": "string",
+            "description": "Overall compliance status"
+          },
+          "violations": {
+            "description": "List of violations",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceViolationDto"
+            }
+          }
+        },
+        "required": [
+          "overall_status",
+          "violations"
+        ]
+      },
+      "RoomResultDto": {
+        "type": "object",
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "description": "Room identifier"
+          },
+          "compliance_status": {
+            "type": "string",
+            "description": "Compliance status"
+          },
+          "missing_equipment": {
+            "description": "Missing equipment",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "violations": {
+            "description": "Violations",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComplianceViolationDto"
+            }
+          }
+        },
+        "required": [
+          "room_id",
+          "compliance_status",
+          "missing_equipment",
+          "violations"
+        ]
+      },
+      "RoomEquipmentValidationResponseDto": {
+        "type": "object",
+        "properties": {
+          "installation_id": {
+            "type": "string",
+            "description": "Installation identifier"
+          },
+          "global_compliance": {
+            "description": "Global compliance",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GlobalComplianceDto"
+              }
+            ]
+          },
+          "room_results": {
+            "description": "Room results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomResultDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Validation timestamp"
+          }
+        },
+        "required": [
+          "installation_id",
+          "global_compliance",
+          "room_results",
+          "timestamp"
+        ]
+      },
+      "CircuitBreakerDto": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Breaker rating in amperes"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity needed"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description"
+          }
+        },
+        "required": [
+          "rating",
+          "quantity",
+          "description"
+        ]
+      },
+      "ElectricalPanelDto": {
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "number",
+            "description": "Number of modules"
+          },
+          "type": {
+            "type": "string",
+            "description": "Panel type"
+          }
+        },
+        "required": [
+          "modules",
+          "type"
+        ]
+      },
+      "CableDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Cable type"
+          },
+          "section": {
+            "type": "number",
+            "description": "Cable section in mm²"
+          },
+          "length_estimate": {
+            "type": "number",
+            "description": "Estimated length in meters"
+          }
+        },
+        "required": [
+          "type",
+          "section",
+          "length_estimate"
+        ]
+      },
+      "DimensioningDto": {
+        "type": "object",
+        "properties": {
+          "circuit_breakers": {
+            "description": "Circuit breakers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CircuitBreakerDto"
+            }
+          },
+          "electrical_panels": {
+            "description": "Electrical panels",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ElectricalPanelDto"
+            }
+          },
+          "cables": {
+            "description": "Cables",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CableDto"
+            }
+          },
+          "installation_notes": {
+            "description": "Installation notes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "circuit_breakers",
+          "electrical_panels",
+          "cables",
+          "installation_notes"
+        ]
+      },
+      "GlobalValidationWithDimensioningResponseDto": {
+        "type": "object",
+        "properties": {
+          "installation_id": {
+            "type": "string",
+            "description": "Installation identifier"
+          },
+          "global_compliance": {
+            "description": "Global compliance",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GlobalComplianceDto"
+              }
+            ]
+          },
+          "room_results": {
+            "description": "Room results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoomResultDto"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Validation timestamp"
+          },
+          "dimensioning": {
+            "description": "Electrical dimensioning",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DimensioningDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "installation_id",
+          "global_compliance",
+          "room_results",
+          "timestamp",
+          "dimensioning"
+        ]
+      }
+    }
+  }
+}

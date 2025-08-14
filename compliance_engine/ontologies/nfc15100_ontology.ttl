@@ -1,0 +1,543 @@
+@prefix nfc: <http://ontology.nfc15100.fr#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Ontology definition
+<http://ontology.nfc15100.fr#> a owl:Ontology ;
+    rdfs:label "NF C 15-100 Electrical Installation Ontology"@en ;
+    rdfs:comment "Ontology for French electrical installation standard NF C 15-100"@en ;
+    owl:versionInfo "1.0" .
+
+# Top-level classes
+nfc:ElectricalInstallation a owl:Class ;
+    rdfs:label "Electrical Installation"@en ;
+    rdfs:comment "Complete electrical installation in a building according to NF C 15-100"@en .
+
+nfc:Room a owl:Class ;
+    rdfs:label "Room"@en ;
+    rdfs:comment "A room or space in a building"@en .
+
+# Room types based on NF C 15-100 requirements
+nfc:Kitchen a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Kitchen"@en, "Cuisine"@fr ;
+    rdfs:comment "Kitchen room with specific electrical requirements"@en .
+
+nfc:LivingRoom a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Living Room"@en, "Salon/Séjour"@fr ;
+    rdfs:comment "Main living area (séjour)"@en .
+
+nfc:LivingRoomWithIntegratedKitchen a owl:Class ;
+    rdfs:subClassOf nfc:Room , nfc:Kitchen , nfc:LivingRoom ;
+    rdfs:label "Living Room with Integrated Kitchen"@en, "Salon/Séjour avec cuisine intégré"@fr ;
+    rdfs:comment "Open-plan living area with integrated kitchen"@en .
+
+nfc:CirculationArea a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Circulation Area"@en, "Circulation et locaux ≥ 4 m²"@fr ;
+    rdfs:comment "Hallways, corridors, and circulation spaces larger than 4m², including utility rooms"@en .
+
+nfc:WetRoom a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Wet Room"@en, "Salle d'eau"@fr ;
+    rdfs:comment "Wet room with shower/bath but no WC"@en .
+
+nfc:WC a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "WC"@en, "WC"@fr ;
+    rdfs:comment "Water closet/toilet room"@en .
+
+nfc:BathroomWithWC a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Bathroom with WC"@en, "Salle d'eau avec WC"@fr ;
+    rdfs:comment "Complete bathroom with shower/bath and WC"@en .
+
+
+
+nfc:Bedroom a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Bedroom"@en, "Chambre"@fr ;
+    rdfs:comment "Bedroom with specific electrical requirements"@en .
+
+nfc:Office a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Office"@en, "Bureau"@fr ;
+    rdfs:comment "Office space with similar requirements to bedroom"@en .
+
+nfc:Other a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Other"@en, "Autres"@fr ;
+    rdfs:comment "Other spaces like garage, small storage, closets"@en .
+
+nfc:ExteriorSpace a owl:Class ;
+    rdfs:subClassOf nfc:Room ;
+    rdfs:label "Exterior Space"@en, "Extérieur"@fr ;
+    rdfs:comment "Outdoor areas like terraces, patios requiring electrical installation"@en .
+
+# Electrical components
+nfc:Circuit a owl:Class ;
+    rdfs:label "Electrical Circuit"@en ;
+    rdfs:comment "Electrical circuit with protection and wiring"@en .
+
+nfc:Socket a owl:Class ;
+    rdfs:label "Socket Outlet"@en ;
+    rdfs:comment "Electrical socket outlet (prise de courant)"@en .
+
+nfc:NetworkSocket a owl:Class ;
+    rdfs:label "Network Socket"@en ;
+    rdfs:comment "Network socket outlet (prise réseau RJ45)"@en .
+
+nfc:LightingPoint a owl:Class ;
+    rdfs:label "Lighting Point"@en ;
+    rdfs:comment "Point for lighting fixture connection"@en .
+
+nfc:Switch a owl:Class ;
+    rdfs:label "Switch"@en ;
+    rdfs:comment "Electrical switch for controlling circuits"@en .
+
+# Protection devices
+nfc:ProtectionDevice a owl:Class ;
+    rdfs:label "Protection Device"@en ;
+    rdfs:comment "Electrical protection device"@en .
+
+nfc:CircuitBreaker a owl:Class ;
+    rdfs:subClassOf nfc:ProtectionDevice ;
+    rdfs:label "Circuit Breaker"@en ;
+    rdfs:comment "Circuit breaker (disjoncteur)"@en .
+
+nfc:RCD a owl:Class ;
+    rdfs:subClassOf nfc:ProtectionDevice ;
+    rdfs:label "Residual Current Device"@en ;
+    rdfs:comment "Differential circuit breaker (interrupteur différentiel)"@en .
+
+# Specialized equipment
+nfc:SpecializedEquipment a owl:Class ;
+    rdfs:label "Specialized Equipment"@en ;
+    rdfs:comment "Specialized electrical equipment requiring dedicated circuits"@en .
+
+nfc:ElectricOven a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Electric Oven"@en ;
+    rdfs:comment "Electric oven requiring dedicated 20A circuit"@en .
+
+nfc:Dishwasher a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Dishwasher"@en ;
+    rdfs:comment "Dishwasher requiring dedicated 20A circuit"@en .
+
+nfc:WashingMachine a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Washing Machine"@en ;
+    rdfs:comment "Washing machine requiring dedicated 20A circuit"@en .
+
+nfc:Dryer a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Dryer"@en ;
+    rdfs:comment "Tumble dryer requiring dedicated 20A circuit"@en .
+
+nfc:CookingHob a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Cooking Hob"@en ;
+    rdfs:comment "Electric cooking hob requiring dedicated 32A circuit"@en .
+
+nfc:ElectricHeating a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Electric Heating"@en ;
+    rdfs:comment "Electric heating system requiring dedicated circuit"@en .
+
+# Specific heating equipment types from NF C 15-100 dimensioning table
+nfc:AirConditioning a owl:Class ;
+    rdfs:subClassOf nfc:ElectricHeating ;
+    rdfs:label "Air Conditioning"@en, "Climatisation"@fr ;
+    rdfs:comment "Air conditioning system (climatisation)"@en .
+
+nfc:Convector a owl:Class ;
+    rdfs:subClassOf nfc:ElectricHeating ;
+    rdfs:label "Convector"@en, "Convecteur"@fr ;
+    rdfs:comment "Electric convector heating"@en .
+
+nfc:InertiaRadiator a owl:Class ;
+    rdfs:subClassOf nfc:ElectricHeating ;
+    rdfs:label "Inertia Radiator"@en, "Radiateur inertie"@fr ;
+    rdfs:comment "Electric inertia radiator heating"@en .
+
+nfc:FloorHeating a owl:Class ;
+    rdfs:subClassOf nfc:ElectricHeating ;
+    rdfs:label "Floor Heating"@en, "Plancher chauffant"@fr ;
+    rdfs:comment "Electric floor heating system"@en .
+
+nfc:DuctedHeatPump a owl:Class ;
+    rdfs:subClassOf nfc:ElectricHeating ;
+    rdfs:label "Ducted Heat Pump"@en, "Pompe à chaleur gainée"@fr ;
+    rdfs:comment "Ducted heat pump system"@en .
+
+# Water Heater equipment (Chauffe-eau)
+nfc:WaterHeater a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "Water Heater"@en, "Chauffe-eau"@fr ;
+    rdfs:comment "Electric water heater system requiring dedicated circuit"@en .
+
+nfc:ElectricWaterHeater a owl:Class ;
+    rdfs:subClassOf nfc:WaterHeater ;
+    rdfs:label "Electric Water Heater"@en, "Chauffe-eau électrique"@fr ;
+    rdfs:comment "Electric water heater for domestic hot water production"@en .
+
+nfc:InstantaneousWaterHeater a owl:Class ;
+    rdfs:subClassOf nfc:WaterHeater ;
+    rdfs:label "Instantaneous Water Heater"@en, "Chauffe-eau instantané"@fr ;
+    rdfs:comment "Instantaneous electric water heater"@en .
+
+nfc:StorageWaterHeater a owl:Class ;
+    rdfs:subClassOf nfc:WaterHeater ;
+    rdfs:label "Storage Water Heater"@en, "Chauffe-eau à accumulation"@fr ;
+    rdfs:comment "Storage electric water heater with tank"@en .
+
+# Properties
+nfc:hasRoom a owl:ObjectProperty ;
+    rdfs:label "has room"@en ;
+    rdfs:comment "Links installation to rooms"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range nfc:Room .
+
+nfc:hasCircuit a owl:ObjectProperty ;
+    rdfs:label "has circuit"@en ;
+    rdfs:comment "Links installation to electrical circuits"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range nfc:Circuit .
+
+nfc:hasSocket a owl:ObjectProperty ;
+    rdfs:label "has socket"@en ;
+    rdfs:comment "Links room to socket outlets"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:Socket .
+
+nfc:hasNetworkSocket a owl:ObjectProperty ;
+    rdfs:label "has network socket"@en ;
+    rdfs:comment "Links room to network socket outlets"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:NetworkSocket .
+
+nfc:hasLightingPoint a owl:ObjectProperty ;
+    rdfs:label "has lighting point"@en ;
+    rdfs:comment "Links room to lighting points"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:LightingPoint .
+
+nfc:hasSwitch a owl:ObjectProperty ;
+    rdfs:label "has switch"@en ;
+    rdfs:comment "Links room to switches"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:Switch .
+
+nfc:protectionRating a owl:DatatypeProperty ;
+    rdfs:label "protection rating"@en ;
+    rdfs:comment "IP protection rating (e.g., IPX4, IP44, IP54)"@en ;
+    rdfs:domain nfc:LightingPoint ;
+    rdfs:range xsd:string .
+
+nfc:hasProtection a owl:ObjectProperty ;
+    rdfs:label "has protection"@en ;
+    rdfs:comment "Links circuit to protection device"@en ;
+    rdfs:domain nfc:Circuit ;
+    rdfs:range nfc:ProtectionDevice .
+
+nfc:hasEquipment a owl:ObjectProperty ;
+    rdfs:label "has equipment"@en ;
+    rdfs:comment "Links room or circuit to specialized equipment"@en .
+
+nfc:suppliedByCircuit a owl:ObjectProperty ;
+    rdfs:label "supplied by circuit"@en ;
+    rdfs:comment "Links equipment to supplying circuit"@en ;
+    rdfs:range nfc:Circuit .
+
+# Data properties
+nfc:roomArea a owl:DatatypeProperty ;
+    rdfs:label "room area"@en ;
+    rdfs:comment "Area of room in square meters"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range xsd:decimal .
+
+nfc:socketType a owl:DatatypeProperty ;
+    rdfs:label "socket type"@en ;
+    rdfs:comment "Type of socket (2P+T, etc.)"@en ;
+    rdfs:domain nfc:Socket ;
+    rdfs:range xsd:string .
+
+nfc:current a owl:DatatypeProperty ;
+    rdfs:label "current rating"@en ;
+    rdfs:comment "Current rating in amperes"@en ;
+    rdfs:range xsd:integer .
+
+nfc:voltage a owl:DatatypeProperty ;
+    rdfs:label "voltage"@en ;
+    rdfs:comment "Voltage rating in volts"@en ;
+    rdfs:range xsd:integer .
+
+nfc:height a owl:DatatypeProperty ;
+    rdfs:label "height"@en ;
+    rdfs:comment "Height from floor in meters"@en ;
+    rdfs:range xsd:decimal .
+
+nfc:wireSection a owl:DatatypeProperty ;
+    rdfs:label "wire section"@en ;
+    rdfs:comment "Wire cross-section in mm²"@en ;
+    rdfs:domain nfc:Circuit ;
+    rdfs:range xsd:decimal .
+
+nfc:circuitLength a owl:DatatypeProperty ;
+    rdfs:label "circuit length"@en ;
+    rdfs:comment "Length of circuit in meters"@en ;
+    rdfs:domain nfc:Circuit ;
+    rdfs:range xsd:decimal .
+
+nfc:isDedicated a owl:DatatypeProperty ;
+    rdfs:label "is dedicated"@en ;
+    rdfs:comment "Whether circuit is dedicated to specific equipment"@en ;
+    rdfs:domain nfc:Circuit ;
+    rdfs:range xsd:boolean .
+
+nfc:differentialRating a owl:DatatypeProperty ;
+    rdfs:label "differential rating"@en ;
+    rdfs:comment "Differential current rating in mA (30mA, 300mA, etc.)"@en ;
+    rdfs:domain nfc:RCD ;
+    rdfs:range xsd:integer .
+
+nfc:powerRating a owl:DatatypeProperty ;
+    rdfs:label "power rating"@en ;
+    rdfs:comment "Power rating in watts"@en ;
+    rdfs:range xsd:integer .
+
+# Socket position properties
+nfc:isAboveWorktop a owl:DatatypeProperty ;
+    rdfs:label "is above worktop"@en ;
+    rdfs:comment "Whether socket is positioned above kitchen worktop"@en ;
+    rdfs:domain nfc:Socket ;
+    rdfs:range xsd:boolean .
+
+nfc:distanceFromWater a owl:DatatypeProperty ;
+    rdfs:label "distance from water"@en ;
+    rdfs:comment "Distance from water sources in meters (bathroom safety)"@en ;
+    rdfs:domain nfc:Socket ;
+    rdfs:range xsd:decimal .
+
+# Bathroom volume zones for safety
+nfc:VolumeZone a owl:Class ;
+    rdfs:label "Volume Zone"@en ;
+    rdfs:comment "Safety volume zone in bathroom"@en .
+
+nfc:Volume0 a owl:Class ;
+    rdfs:subClassOf nfc:VolumeZone ;
+    rdfs:label "Volume 0"@en ;
+    rdfs:comment "Water contact zone - no electrical equipment allowed"@en .
+
+nfc:Volume1 a owl:Class ;
+    rdfs:subClassOf nfc:VolumeZone ;
+    rdfs:label "Volume 1"@en ;
+    rdfs:comment "Water spray zone - limited equipment allowed"@en .
+
+nfc:Volume2 a owl:Class ;
+    rdfs:subClassOf nfc:VolumeZone ;
+    rdfs:label "Volume 2"@en ;
+    rdfs:comment "Safety distance zone - sockets allowed with protection"@en .
+
+nfc:inVolumeZone a owl:ObjectProperty ;
+    rdfs:label "in volume zone"@en ;
+    rdfs:comment "Links equipment to bathroom volume zone"@en ;
+    rdfs:range nfc:VolumeZone .
+
+# Additional properties for heating dimensioning
+nfc:maxSurface a owl:DatatypeProperty ;
+    rdfs:label "maximum surface"@en, "superficie max"@fr ;
+    rdfs:comment "Maximum surface area that can be heated by equipment in m²"@en ;
+    rdfs:domain nfc:ElectricHeating ;
+    rdfs:range xsd:decimal .
+
+nfc:heatingType a owl:DatatypeProperty ;
+    rdfs:label "heating type"@en, "type de chauffage"@fr ;
+    rdfs:comment "Type of heating equipment"@en ;
+    rdfs:domain nfc:ElectricHeating ;
+    rdfs:range xsd:string .
+
+nfc:requiredPower a owl:DatatypeProperty ;
+    rdfs:label "required power"@en, "puissance requise"@fr ;
+    rdfs:comment "Required electrical power in watts"@en ;
+    rdfs:domain nfc:ElectricHeating ;
+    rdfs:range xsd:integer .
+
+nfc:recommendedBreaker a owl:DatatypeProperty ;
+    rdfs:label "recommended breaker"@en, "disjoncteur recommandé"@fr ;
+    rdfs:comment "Recommended circuit breaker rating"@en ;
+    rdfs:domain nfc:ElectricHeating ;
+    rdfs:range xsd:string .
+
+nfc:hasHeatingEquipment a owl:ObjectProperty ;
+    rdfs:label "has heating equipment"@en ;
+    rdfs:comment "Links room to heating equipment"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:ElectricHeating .
+
+# Additional properties for water heater dimensioning
+nfc:numberOfPersons a owl:DatatypeProperty ;
+    rdfs:label "number of persons"@en, "nombre de personnes"@fr ;
+    rdfs:comment "Number of persons in the dwelling for water heater sizing"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range xsd:integer .
+
+nfc:globalSurface a owl:DatatypeProperty ;
+    rdfs:label "global surface"@en, "superficie globale"@fr ;
+    rdfs:comment "Total surface area of the dwelling in m²"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range xsd:decimal .
+
+nfc:recommendedVolume a owl:DatatypeProperty ;
+    rdfs:label "recommended volume"@en, "volume recommandé"@fr ;
+    rdfs:comment "Recommended water tank volume in liters"@en ;
+    rdfs:domain nfc:WaterHeater ;
+    rdfs:range xsd:integer .
+
+nfc:tankCapacity a owl:DatatypeProperty ;
+    rdfs:label "tank capacity"@en, "capacité du ballon"@fr ;
+    rdfs:comment "Actual water tank capacity in liters"@en ;
+    rdfs:domain nfc:WaterHeater ;
+    rdfs:range xsd:integer .
+
+nfc:hasWaterHeater a owl:ObjectProperty ;
+    rdfs:label "has water heater"@en ;
+    rdfs:comment "Links installation to water heater equipment"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range nfc:WaterHeater .
+
+nfc:hasVMC a owl:ObjectProperty ;
+    rdfs:label "has VMC"@en ;
+    rdfs:comment "Links installation to VMC equipment"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range nfc:VMC .
+
+# VMC equipment (Ventilation Mécanique Contrôlée)
+nfc:VMC a owl:Class ;
+    rdfs:subClassOf nfc:SpecializedEquipment ;
+    rdfs:label "VMC"@en, "Ventilation Mécanique Contrôlée"@fr ;
+    rdfs:comment "Mechanical ventilation system requiring dedicated circuit"@en .
+
+nfc:SimpleFlowVMC a owl:Class ;
+    rdfs:subClassOf nfc:VMC ;
+    rdfs:label "Simple Flow VMC"@en, "VMC Simple flux"@fr ;
+    rdfs:comment "Simple flow mechanical ventilation system"@en .
+
+nfc:DoubleFlowVMC a owl:Class ;
+    rdfs:subClassOf nfc:VMC ;
+    rdfs:label "Double Flow VMC"@en, "VMC Double flux"@fr ;
+    rdfs:comment "Double flow mechanical ventilation system with heat recovery"@en .
+
+# Specialized socket and equipment types according to NF C 15-100 specifications
+nfc:SimpleSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Simple Socket"@en, "Prise simple"@fr ;
+    rdfs:comment "Standard single socket outlet (SCH5520059, EUR52061, 2.5mm²)"@en .
+
+nfc:DoubleSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Double Socket"@en, "Prise double"@fr ;
+    rdfs:comment "Double socket outlet (2.5mm² cable section)"@en .
+
+nfc:WaterproofSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Waterproof Socket"@en, "Prise étanche"@fr ;
+    rdfs:comment "Waterproof socket outlet (SCHMUR35031, EUR52061, 2.5mm²)"@en .
+
+# RJ45Socket removed - use NetworkSocket instead
+
+nfc:TVSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "TV Socket"@en, "Prise TV"@fr ;
+    rdfs:comment "TV socket outlet (SCH5520445, EUR52061, Coaxial cable)"@en .
+
+nfc:OvenSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Oven/Hob Socket"@en, "Prise Four/Plaque"@fr ;
+    rdfs:comment "High-power socket for oven/hob (SCH5520059, EUR52061, 6mm²)"@en .
+
+nfc:ExtractorSocket a owl:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Extractor Socket"@en, "Prise Hotte"@fr ;
+    rdfs:comment "Socket for kitchen extractor hood (SCH5520059, EUR52061, 2.5mm²)"@en .
+
+nfc:SimpleSwitch a owl:Class ;
+    rdfs:subClassOf nfc:Switch ;
+    rdfs:label "Simple Switch"@en, "Interrupteur simple"@fr ;
+    rdfs:comment "Single switch (SCH5520204, EUR52061, 1.5mm²)"@en .
+
+nfc:DoubleSwitch a owl:Class ;
+    rdfs:subClassOf nfc:Switch ;
+    rdfs:label "Double Switch"@en, "Interrupteur double"@fr ;
+    rdfs:comment "Double switch (SCH5520214, EUR52061, 1.5mm²)"@en .
+
+nfc:DimmerSwitch a owl:Class ;
+    rdfs:subClassOf nfc:Switch ;
+    rdfs:label "Dimmer Switch"@en, "Va-et-vient"@fr ;
+    rdfs:comment "Dimmer/two-way switch (SCH5520204, EUR52061, 1.5mm²)"@en .
+
+nfc:SimpleFlowVMC a owl:Class ;
+    rdfs:subClassOf nfc:VMC ;
+    rdfs:label "Simple Flow VMC"@en, "VMC Simple flux"@fr ;
+    rdfs:comment "Single flow mechanical ventilation system"@en .
+
+nfc:DoubleFlowVMC a owl:Class ;
+    rdfs:subClassOf nfc:VMC ;
+    rdfs:label "Double Flow VMC"@en, "VMC Double flux"@fr ;
+    rdfs:comment "Double flow mechanical ventilation system with heat recovery"@en .
+
+# Additional properties for VMC dimensioning
+nfc:vmcType a owl:DatatypeProperty ;
+    rdfs:label "VMC type"@en, "type de VMC"@fr ;
+    rdfs:comment "Type of VMC system (simple flux or double flux)"@en ;
+    rdfs:domain nfc:VMC ;
+    rdfs:range xsd:string .
+
+nfc:hasVMC a owl:ObjectProperty ;
+    rdfs:label "has VMC"@en ;
+    rdfs:comment "Links installation to VMC equipment"@en ;
+    rdfs:domain nfc:ElectricalInstallation ;
+    rdfs:range nfc:VMC .
+
+# Technical specification properties according to NF C 15-100
+nfc:principalReference a owl:DatatypeProperty ;
+    rdfs:label "principal reference"@en, "référence principale"@fr ;
+    rdfs:comment "Principal technical reference (e.g., SCH5520059)"@en ;
+    rdfs:range xsd:string .
+
+nfc:secondaryReference a owl:DatatypeProperty ;
+    rdfs:label "secondary reference"@en, "référence secondaire"@fr ;
+    rdfs:comment "Secondary technical reference"@en ;
+    rdfs:range xsd:string .
+
+nfc:enclosureBox a owl:DatatypeProperty ;
+    rdfs:label "enclosure box"@en, "boîte encastrement"@fr ;
+    rdfs:comment "Enclosure box reference (e.g., EUR52061)"@en ;
+    rdfs:range xsd:string .
+
+nfc:cableType a owl:DatatypeProperty ;
+    rdfs:label "cable type"@en, "type de câble"@fr ;
+    rdfs:comment "Type of cable required (e.g., RJ45, Coaxial)"@en ;
+    rdfs:range xsd:string .
+
+nfc:requiredCableSection a owl:DatatypeProperty ;
+    rdfs:label "required cable section"@en, "section câble requise"@fr ;
+    rdfs:comment "Required cable section in mm² for this equipment type"@en ;
+    rdfs:range xsd:decimal .
+
+# New property: specialized equipment
+nfc:hasSpecializedEquipment a owl:ObjectProperty ;
+    rdfs:label "has specialized equipment"@en ;
+    rdfs:comment "Links room to specialized electrical equipment (requires dedicated circuits)"@en ;
+    rdfs:domain nfc:Room ;
+    rdfs:range nfc:SpecializedEquipment .
+
+# Nouvelle classe : Dedicated20ASocket (prise simple 20 A sur circuit dédié)
+nfc:Dedicated20ASocket a rdfs:Class ;
+    rdfs:subClassOf nfc:Socket ;
+    rdfs:label "Prise simple 20 A sur circuit dédié"@fr ;
+    rdfs:comment "Prise 2P+T alimentée par un circuit dédié 20 A (NF C 15-100)"@fr . 

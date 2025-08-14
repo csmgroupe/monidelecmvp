@@ -1,0 +1,18 @@
+<%
+const { utils, route } = it;  
+const { _, pascalCase } = utils
+const apiClassName = pascalCase(route.moduleName);
+const apiClassNameScreamingCase = _.upperCase(_.camelCase(route.moduleName).replace(/([A-Z])/g, '_$1')).replace(/( )/g, '_')
+const objectName = `${apiClassNameScreamingCase}_QUERY_KEYS`
+const routes = route.routes
+%>
+
+export const <%= objectName %> = {
+  <% routes.forEach((route) => { %>
+    <%
+      const key = _.camelCase(route.routeName.usage.replace(new RegExp(apiClassName, 'i'), ''))
+      const value = _.camelCase(route.routeName.usage)
+    %>
+    <%= key %>: '<%~ value %>',
+  <% }) %>
+};
