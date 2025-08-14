@@ -1,3 +1,4 @@
 .DS_Store
 certbot
 .env.prod
+.env
